@@ -30,15 +30,15 @@ class DestinoController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        Destino::create([
+            "pais" => $request->pais,
+            "descripcion" => $request->descripcion,
+            "img_fondo" => "https://via.placeholder.com/899x594",
+            "img_bandera" => "https://via.placeholder.com/61x62",
+        ]);
+        return response()->json(["status" => 200]);
     }
 
     /**
@@ -63,26 +63,19 @@ class DestinoController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        Destino::where('id', $request->id)->update([
+            "pais" => $request->pais,
+            "descripcion" => $request->descripcion,
+        ]);
+        return response()->json(["status" => 200]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $destino = Destino::find($request->id);
+        $destino->delete();
+        return response()->json(["status" => 200]);
     }
 }
